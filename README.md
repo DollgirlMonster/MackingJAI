@@ -67,6 +67,7 @@ By default, all available models in your ChatGPT Desktop app are available in Ma
 - `GPT4.1` models are not supported since they are API exclusive. So `gpt-4.1`, `gpt-4.1-mini`, and `gpt-4.1-nano` are redirected to `GPT-4`, `GPT-4o` and `GPT-4o-mini` respectively.
 
 # Todo
+- Create a homebrew cask for easy installation
 - Explore similar functionality for Windows users
 - Explore how to integrate conversation history
 - Explore how to integrate system prompt if possible
