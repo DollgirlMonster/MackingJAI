@@ -1,7 +1,7 @@
 from setuptools import setup
 
 APP = ['rumps_app.py']
-DATA_FILES = ['icon.icns']
+DATA_FILES = ['icon.icns', 'iconbw.icns']
 OPTIONS = {
     'argv_emulation': False,
     'iconfile': 'icon.icns',
@@ -20,8 +20,6 @@ OPTIONS = {
     'verbose': True,
     # Don't strip debug symbols
     'strip': False,
-    # Use alias mode for easier debugging
-    'alias': True,
 }
 
 setup(
