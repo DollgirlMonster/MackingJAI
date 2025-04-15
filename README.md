@@ -67,4 +67,4 @@ By default, all available models in your ChatGPT Desktop app are available in Ma
 - `GPT4.1` models are not supported since they are API exclusive. So `gpt-4.1`, `gpt-4.1-mini`, and `gpt-4.1-nano` are redirected to `GPT-4`, `GPT-4o` and `GPT-4o-mini` respectively.
 
 # Disclaimer
-MackingJAI is not meant to replace OpenAI API by any means, it's just a **mock for hobbiers** and developers who want to play with OpenAI API without using an API key for **personal purposes and automations**.
+MackingJAI is not meant to replace the OpenAI API by any means; it’s simply a **mock for hobbyists** and developers who want to experiment with the OpenAI API without using an API key **for personal projects and automations**.
