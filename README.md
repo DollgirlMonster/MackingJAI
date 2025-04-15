@@ -9,6 +9,7 @@
 
 # Overview
 MackingJAI mocks the process of using OpenAI API for chat models by using ChatGPT Mac app and Apple Shortcuts. Users can simplify the interaction with ChatGPT without using an API key.
+
 Think of it as [Ollama](https://github.com/ollama/ollama) or any OpenAI API wrapper but it uses OpenAI's own ChatGPT Desktop app as the backend instead.
 
 # Installation
