@@ -78,7 +78,7 @@ def prompt_model():
         
         # Handling model names
         stored_model = data.get('model', default_model)
-        sorted_model = model_handler(stored_model)
+        stored_model = model_handler(stored_model)
         
         stored_message = ""  # will be filled later by /internal POST
         
