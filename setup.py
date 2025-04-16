@@ -20,6 +20,7 @@ OPTIONS = {
     'verbose': True,
     # Don't strip debug symbols
     'strip': False,
+    'frameworks': ['/Users/usamaahmed/miniconda3/envs/mackingjai/lib/libffi.8.dylib'],
 }
 
 setup(
