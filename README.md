@@ -14,7 +14,7 @@ Think of it as [Ollama](https://github.com/ollama/ollama) or any OpenAI API comp
 
 # Installation
 - Download and install the DMG file from [releases](https://github.com/0ssamaak0/MackingJAI/releases)
-- Install the shortcut by clicking on `Install Shortcut` from the menu icon or from [here](https://www.icloud.com/shortcuts/afe42adad0004fefbf4f9c4c16948002)
+- Install the shortcut by clicking on `Install Shortcut` from the menu icon or from [here](https://www.icloud.com/shortcuts/ffd7eadc92534952a6d9e5fac2eaadcd)
 
 ![menu](assets/menu.png)
 

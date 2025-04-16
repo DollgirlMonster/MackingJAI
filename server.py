@@ -18,9 +18,9 @@ stored_message = ""
 models = [
     "GPT-4",
     "GPT-4o mini",
-    "o3-mini-high",
-    "o3-mini",
-    "o1",
+    "o4-mini-high",
+    "o4-mini",
+    "o3",
     "GPT-4.5",
     "GPT-4o"
 ]
@@ -40,8 +40,8 @@ def model_handler(model_name):
     model_name = next((m for m in models if model_name.lower() == m.lower()), model_name)
     
     if model_name == "o1-pro":
-        print("o1-pro is not supported, using o1 instead")
-        model_name = "o1"
+        print("o1-pro is not supported, using o3 instead")
+        model_name = "o3"
     elif model_name == "gpt-4.1":
         print("gpt-4.1 is not supported, using gpt-4 instead")
         model_name = "GPT-4"
