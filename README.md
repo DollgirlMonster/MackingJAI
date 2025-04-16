@@ -38,7 +38,7 @@ curl http://127.0.0.1:11435/v1/chat/completions \
         "messages": [
             {
                 "role": "user",
-                "content": "How many times the letter r occur in the word Srawberry? Answer with a single number."
+                "content": "How many times the letter r occur in the word Strawberry? Answer with a single number."
             }
         ]
     }'
