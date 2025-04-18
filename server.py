@@ -51,7 +51,7 @@ def model_handler(model_name):
     elif model_name == "gpt-4.1-nano":
         print("gpt-4.1-nano is not supported, using gpt-4o mini instead")
         model_name = "GPT-4o mini"
-    
+    print(f"Model name: {model_name}")
     assert model_name in models, f"Model {model_name} is not supported.\n"
     return model_name
 
@@ -124,7 +124,7 @@ def internal():
         return jsonify({"status": "ok"})
 
 def run_server():
-    app.run(debug=False, threaded=True, port=11435, use_reloader=False)
+    app.run(host="0.0.0.0", debug=False, threaded=True, port=11435, use_reloader=False)
 
 if __name__ == '__main__':
     run_server()
