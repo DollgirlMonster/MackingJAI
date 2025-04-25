@@ -34,7 +34,7 @@ curl http://127.0.0.1:11435/v1/chat/completions \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer No need for API" \
     -d '{
-        "model": "o3-mini-high",
+        "model": "o4-mini-high",
         "messages": [
             {
                 "role": "user",
