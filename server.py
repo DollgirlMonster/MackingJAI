@@ -85,7 +85,7 @@ def prompt_model():
         subprocess.Popen(["shortcuts", "run", "MackingJAI"])
         message_ready.wait()
         
-        return jsonify({
+        response_payload = {
             "id": "chatcmpl-local-001",
             "object": "chat.completion",
             "created": 0,
@@ -105,8 +105,25 @@ def prompt_model():
                 "prompt_tokens": 0,
                 "completion_tokens": 0,
                 "total_tokens": 0
-            }
-        })
+            },
+            # Generic signal that processing is done
+            "finish_signal": True
+        }
+        response = jsonify(response_payload)
+        # Add a generic header to signal completion
+        response.headers['X-Chat-Complete'] = 'true'
+        return response
+
+@app.route('/v1/models', methods=['GET'])
+def list_models():
+    """
+    Return a list of supported models in the OpenAI API format.
+    """
+    return jsonify({
+        "data": [
+            {"id": m, "object": "model"} for m in models
+        ]
+    })
 
 @app.route('/internal', methods=['GET', 'POST'])
 def internal():
