@@ -1,3 +1,4 @@
+import os
 from setuptools import setup
 
 APP = ['rumps_app.py']
@@ -20,7 +21,7 @@ OPTIONS = {
     'verbose': True,
     # Don't strip debug symbols
     'strip': False,
-    'frameworks': ['/Users/usamaahmed/miniconda3/envs/mackingjai/lib/libffi.8.dylib'],
+    'frameworks': [os.path.join(os.environ.get('CONDA_PREFIX', ''), 'lib', 'libffi.8.dylib')],
 }
 
 setup(
