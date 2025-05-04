@@ -28,6 +28,7 @@ Note: You may be asked to give some permissions to the shortcut to run. This is 
 
 ## Usage
 Theory, you can use any OpenAI API compatible library to make requests to the mocked API. However there are many limitations discussed below.
+
 ### Curl:
 ```bash
 curl http://127.0.0.1:11435/v1/chat/completions \
@@ -35,27 +36,53 @@ curl http://127.0.0.1:11435/v1/chat/completions \
     -H "Authorization: Bearer No need for API" \
     -d '{
         "model": "o4-mini-high",
-        "messages": [
-            {
-                "role": "user",
-                "content": "How many times the letter r occur in the word Strawberry? Answer with a single number."
-            }
-        ]
-    }'
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a fact checker, answer with yes or no only"
+        },
+        {
+            "role": "user",
+            "content": "Paris is the capiatl of France"
+        }
+    ]
+}'
+```
+
+## OpenAI Python
+```python
+from openai import OpenAI
+client = OpenAI(api_key="No need for API", base_url="http://127.0.0.1:11435/v1/")
+
+completion = client.chat.completions.create(
+  model="gpt-4o",
+  messages=[
+    {"role": "developer", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "Hello!"}
+  ]
+)
+
+print(completion.choices[0].message)
 ```
 
 ## LangChain 🦜🔗
 ```python
 from langchain_openai import ChatOpenAI
-chat = ChatOpenAI(
-    temperature=15,
-    model_name="gpt-4",
+
+llm = ChatOpenAI(
+    model_name="gpt-4o",
     openai_api_base="http://127.0.0.1:11435/v1",
     openai_api_key="No key",
 )
-prompt = "How many prime numbers between 1 and 100"
-response = chat(prompt)
-print(response.content)
+messages = [
+    (
+        "system",
+        "You are a helpful assistant that translates English to French. Translate the user sentence.",
+    ),
+    ("human", "The quick brown fox jumps over the lazy dog"),
+]
+ai_msg = llm.invoke(messages)
+print(ai_msg)
 ```
 
 # Limitations
@@ -69,10 +96,7 @@ By default, all available models in your ChatGPT Desktop app are available in Ma
 - `GPT4.1` models are not supported since they are API exclusive. So `gpt-4.1`, `gpt-4.1-mini`, and `gpt-4.1-nano` are redirected to `GPT-4`, `GPT-4o` and `GPT-4o-mini` respectively.
 
 # Todo
+- ~~Explore how to integrate conversation history~~ ✅
+- ~~Explore how to integrate system prompt if possible~~ ✅
 - Create a homebrew cask for easy installation
 - Explore similar functionality for Windows users
-- Explore how to integrate conversation history
-- Explore how to integrate system prompt if possible
-
-# Disclaimer
-MackingJAI is not meant to replace the OpenAI API by any means; it’s simply a **mock for hobbyists** and developers who want to experiment with the OpenAI API without using an API key **for personal projects and automations**.
