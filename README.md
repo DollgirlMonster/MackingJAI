@@ -85,6 +85,14 @@ ai_msg = llm.invoke(messages)
 print(ai_msg)
 ```
 
+## Open-webui
+- add a new OpenAI API compatible connection with URL `http://host.docker.internal:11435/v1` (if you installed openwebui using docker) and set they key to anything
+
+- If you don't use docker, check the URL of Ollama in Ollama A`PI and replace `11434` with `11435` in the URL
+
+> **Tip:** If you are using reasoning models like `o3` or `o4-mini`, it's better to set a different model for Title and Tag Generation.  
+> Navigate to `Settings > Admin Settings > Interface > Set Task Model` and choose a non-reasoning model. This will save your quota and speed up the generation process.
+
 # Limitations
 - Everything is limited by your chatgpt desktop application and your subscription including available models, rate limits and generation speed.
 - There's no way to set the system prompt or use any other parameters.
