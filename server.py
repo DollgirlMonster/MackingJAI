@@ -65,16 +65,23 @@ def prompt_model():
         
         # Extract the user's prompt from the OpenAI‑style messages list
         messages = data.get('messages', [])
-        user_prompt = default_prompt
-        
-        if isinstance(messages, list):
-            for m in reversed(messages):
-                if m.get('role') == 'user':
-                    user_prompt = m.get('content', default_prompt)
-                    break
-        
-        # Update the stored values
-        stored_prompt = user_prompt
+        # Build conversation history as prompt for the model
+        if isinstance(messages, list) and messages:
+            formatted_history = []
+            for m in messages:
+                role = m.get('role')
+                content = m.get('content', "")
+                if role == "system":
+                    formatted_history.append(f"System: {content}")
+                elif role == "user":
+                    formatted_history.append(f"User: {content}")
+                elif role == "assistant":
+                    formatted_history.append(f"Assistant: {content}")
+                else:
+                    formatted_history.append(f"{role.capitalize()}: {content}")
+            stored_prompt = "\n".join(formatted_history)
+        else:
+            stored_prompt = default_prompt
         
         # Handling model names
         stored_model = data.get('model', default_model)
