@@ -96,7 +96,7 @@ print(ai_msg)
 # Limitations
 - Everything is limited by your chatgpt desktop application and your subscription including available models, rate limits and generation speed.
 - There's no way to set the system prompt or use any other parameters.
-- You can send images in this mock.
+- You can't send images in this mock.
 
 # Models
 By default, all available models in your ChatGPT Desktop app are available in MackingJAI. 
