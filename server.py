@@ -43,8 +43,8 @@ def model_handler(model_name):
         print("o1-pro is not supported, using o3 instead")
         model_name = "o3"
     elif model_name == "gpt-4.1":
-        print("gpt-4.1 is not supported, using gpt-4 instead")
-        model_name = "GPT-4"
+        print("gpt-4.1 is not supported, using gpt-4o instead")
+        model_name = "GPT-4o"
     elif model_name == "gpt-4.1-mini":
         print("gpt-4.1-mini is not supported, using gpt-4o instead")
         model_name = "GPT-4o"
