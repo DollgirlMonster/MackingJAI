@@ -16,7 +16,6 @@ stored_model = default_model
 stored_message = ""
 
 models = [
-    "GPT-4",
     "GPT-4o mini",
     "o4-mini-high",
     "o4-mini",
