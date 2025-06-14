@@ -8,7 +8,7 @@
 </div>
 
 # Overview
-MackingJAI mocks the process of using OpenAI API or Ollama APIfor chat models by using ChatGPT Mac app and Apple Shortcuts. Users can simplify the interaction with ChatGPT without using an API key.
+MackingJAI mocks the process of using OpenAI API or Ollama API for chat models by using ChatGPT Mac app and Apple Shortcuts. Users can simplify the interaction with ChatGPT without using an API key.
 
 You can use it for any application that uses OpenAI API or Ollama API to run.
 
