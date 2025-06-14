@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 APP = ['rumps_app.py']
-DATA_FILES = ['icon.icns', 'iconbw.icns']
+DATA_FILES = ['icon.icns', 'iconbw.icns', 'api_show.json']
 OPTIONS = {
     'argv_emulation': False,
     'iconfile': 'icon.icns',

@@ -8,9 +8,9 @@
 </div>
 
 # Overview
-MackingJAI mocks the process of using OpenAI API for chat models by using ChatGPT Mac app and Apple Shortcuts. Users can simplify the interaction with ChatGPT without using an API key.
+MackingJAI mocks the process of using OpenAI API or Ollama APIfor chat models by using ChatGPT Mac app and Apple Shortcuts. Users can simplify the interaction with ChatGPT without using an API key.
 
-Think of it as [Ollama](https://github.com/ollama/ollama) or any OpenAI API compatible option, but it uses OpenAI's own ChatGPT Desktop app as the backend instead.
+You can use it for any application that uses OpenAI API or Ollama API to run.
 
 # Installation
 - Download and install the DMG file from [releases](https://github.com/0ssamaak0/MackingJAI/releases)
@@ -18,9 +18,9 @@ Think of it as [Ollama](https://github.com/ollama/ollama) or any OpenAI API comp
 
 ![menu](assets/menu.png)
 
-
 - Make sure you have ChatGPT Desktop app installed and running on your Mac.
 - In any OpenAI API compatible request, set the API base to `http://127.0.0.1:11435/v1/` instead of `https://api.openai.com/v1` and set any value for the API key. The API key is not used in this mock.
+- Or if using Ollama API, just change the API base from `http://127.0.0.1:11434` to `http://127.0.0.1:11435`. Nothing else is needed.
 - The shortcut will automatically detect the request and send it to the ChatGPT Desktop app
 
 Note: You may be asked to give some permissions to the shortcut to run. This is necessary for the shortcut to work properly.
@@ -86,12 +86,22 @@ print(ai_msg)
 ```
 
 ## Open-webui
-- add a new OpenAI API compatible connection with URL `http://host.docker.internal:11435/v1` (if you installed openwebui using docker) and set they key to anything
 
-- If you don't use docker, check the URL of Ollama in Ollama A`PI and replace `11434` with `11435` in the URL
+- **As a Local Ollama API**: Just add a new connection with the URL `http://host.docker.internal:11435`
+
+- As an **OpenAI API compatible**: add a new OpenAI API compatible connection with URL `http://host.docker.internal:11435/v1` (if you installed openwebui using docker) and set they key to anything
+
+![openwebui](assets/open-webui.png)
+
+- If you don't use docker, check the URL of Ollama in Ollama API and replace `11434` with `11435` in the URL
 
 > **Tip:** If you are using reasoning models like `o3` or `o4-mini`, it's better to set a different model for Title and Tag Generation.  
 > Navigate to `Settings > Admin Settings > Interface > Set Task Model` and choose a non-reasoning model. This will save your quota and speed up the generation process.
+
+## Raycast AI
+MackingJAI can be used for Raycast AI, just change Ollama Route from `11434` to `11435` in the Raycast AI settings. It will access all available models in your ChatGPT Desktop app.
+
+![raycast](assets/raycast.png)
 
 # Limitations
 - Everything is limited by your chatgpt desktop application and your subscription including available models, rate limits and generation speed.
