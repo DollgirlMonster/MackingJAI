@@ -1,7 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import subprocess
 from threading import Event
 import re
+import json
+import time
+
+VERSION = "0.4"
 
 # Global event flag
 message_ready = Event()
@@ -49,6 +53,7 @@ def model_handler(model_name):
     assert model_name in models, f"Model {model_name} is not supported.\n"
     return model_name
 
+# OpenAI API
 @app.route('/v1/chat/completions', methods=['POST'])
 def prompt_model():
     global stored_prompt, stored_model, stored_message
@@ -125,6 +130,138 @@ def list_models():
             {"id": m, "object": "model"} for m in models
         ]
     })
+
+# Ollama API
+@app.route('/api/chat', methods=['POST'])
+def prompt_model_ollama():
+    global stored_prompt, stored_model, stored_message
+    message_ready.clear()
+    
+    if request.method == 'POST':
+        try:
+            data = request.get_json(force=True)
+        except Exception:
+            # Fallback: try to parse raw data as JSON
+            data = None
+            if request.data:
+                try:
+                    data = json.loads(request.data.decode('utf-8'))
+                except Exception:
+                    data = {}
+        if not data:
+            data = {}
+        
+        # Extract the user's prompt from the OpenAI‑style messages list
+        messages = data.get('messages', [])
+        # Build conversation history as prompt for the model
+        if isinstance(messages, list) and messages:
+            formatted_history = []
+            for m in messages:
+                role = m.get('role')
+                content = m.get('content', "")
+                if role == "system":
+                    formatted_history.append(f"System: {content}")
+                elif role == "user":
+                    formatted_history.append(f"User: {content}")
+                elif role == "assistant":
+                    formatted_history.append(f"Assistant: {content}")
+                else:
+                    formatted_history.append(f"{role.capitalize()}: {content}")
+            stored_prompt = "\n".join(formatted_history)
+        else:
+            stored_prompt = default_prompt
+        
+        # Handling model names
+        stored_model = data.get('model', default_model)
+        stored_model = model_handler(stored_model)
+        
+        stored_message = ""  # will be filled later by /internal POST
+        
+        subprocess.Popen(["shortcuts", "run", "MackingJAI"])
+        message_ready.wait()
+        
+        stream = data.get('stream', True)
+        
+        if not stream:
+            # Non-streaming: return the whole message at once
+            response_payload = {
+                "model": stored_model,
+                "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "message": {
+                    "role": "assistant",
+                    "content": stored_message
+                },
+                "done_reason": "stop",
+                "done": True,
+                "total_duration": 0,
+                "load_duration": 0,
+                "prompt_eval_count": 0,
+                "prompt_eval_duration": 0,
+                "eval_count": 0,
+                "eval_duration": 0
+            }
+            return jsonify(response_payload)
+        else:
+            # Streaming: yield chunks of the message
+            def generate_stream():
+                import uuid
+                now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                chunk_size = 8  # characters per chunk
+                content = stored_message or ""
+                for i in range(0, len(content), chunk_size):
+                    chunk = content[i:i+chunk_size]
+                    obj = {
+                        "model": stored_model,
+                        "created_at": now,
+                        "message": {
+                            "role": "assistant",
+                            "content": chunk
+                        },
+                        "done": False
+                    }
+                    yield json.dumps(obj) + '\n'
+                    time.sleep(0.02)
+                # Final chunk with done: true
+                obj = {
+                    "model": stored_model,
+                    "created_at": now,
+                    "message": {
+                        "role": "assistant",
+                        "content": ""
+                    },
+                    "done_reason": "stop",
+                    "done": True,
+                    "total_duration": 0,
+                    "load_duration": 0,
+                    "prompt_eval_count": 0,
+                    "prompt_eval_duration": 0,
+                    "eval_count": 0,
+                    "eval_duration": 0
+                }
+                yield json.dumps(obj) + '\n'
+            return Response(generate_stream(), mimetype='application/x-ndjson')
+
+@app.route('/api/tags', methods=['GET'])
+@app.route('/api/ps', methods=['GET'])
+def list_models_ollama():
+    """
+    Return a list of supported models in the OpenAI API format.
+    """
+    return jsonify({
+        "models": [
+            {"name":m , "model": m, "size": 1, "digest": "", "modified_at": "2025-01-01T11:15:24.832444301+03:00"} for m in models
+        ]
+    })
+
+@app.route('/api/show', methods=['POST'])
+def show_model():
+    data = request.get_json()
+    model = data.get('model', "")
+    return json.load(open("api_show.json"))
+
+@app.route('/api/version', methods=['GET'])
+def version():
+    return jsonify({"version": VERSION})
 
 @app.route('/internal', methods=['GET', 'POST'])
 def internal():
