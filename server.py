@@ -220,7 +220,7 @@ def prompt_model_ollama():
                         "done": False
                     }
                     yield json.dumps(obj) + '\n'
-                    time.sleep(0.02)
+                    time.sleep(0.001)
                 # Final chunk with done: true
                 obj = {
                     "model": stored_model,
