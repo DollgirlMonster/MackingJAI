@@ -1,0 +1,52 @@
+{
+    "license": "",
+    "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "model",
+        "families": [
+            "model"
+        ],
+        "parameter_size": "8.2B",
+        "quantization_level": "Q4_K_M"
+    },
+    "model_info": {
+        "general.architecture": "model",
+        "general.basename": "model",
+        "general.file_type": 15,
+        "general.license": "apache-2.0",
+        "general.parameter_count": 8190735360,
+        "general.quantization_version": 2,
+        "general.size_label": "8B",
+        "general.type": "model",
+        "model.attention.head_count": 32,
+        "model.attention.head_count_kv": 8,
+        "model.attention.key_length": 128,
+        "model.attention.layer_norm_rms_epsilon": 1e-06,
+        "model.attention.value_length": 128,
+        "model.block_count": 36,
+        "model.context_length": 40960,
+        "model.embedding_length": 4096,
+        "model.feed_forward_length": 12288,
+        "model.rope.freq_base": 1000000,
+        "tokenizer.ggml.add_bos_token": false,
+        "tokenizer.ggml.bos_token_id": 151643,
+        "tokenizer.ggml.eos_token_id": 151645,
+        "tokenizer.ggml.merges": null
+    },
+    "tensors": [
+        {
+            "name": "output.weight",
+            "type": "Q6_K",
+            "shape": [
+                4096,
+                151936
+            ]
+        }
+    ],
+    "capabilities": [
+        "completion",
+        "tools"
+    ],
+    "modified_at": "2025-05-01T11:15:24.832444301+03:00"
+}

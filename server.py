@@ -256,7 +256,6 @@ def list_models_ollama():
 @app.route('/api/show', methods=['POST'])
 def show_model():
     data = request.get_json()
-    model = data.get('model', "")
     return json.load(open("api_show.json"))
 
 @app.route('/api/version', methods=['GET'])
