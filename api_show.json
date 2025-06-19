@@ -3,22 +3,22 @@
     "details": {
         "parent_model": "",
         "format": "gguf",
-        "family": "model",
+        "family": "modelname_placeholder",
         "families": [
-            "model"
+            "modelname_placeholder"
         ],
         "parameter_size": "8.2B",
         "quantization_level": "Q4_K_M"
     },
     "model_info": {
-        "general.architecture": "model",
-        "general.basename": "model",
+        "general.architecture": "modelname_placeholder",
+        "general.basename": "modelname_placeholder",
         "general.file_type": 15,
         "general.license": "apache-2.0",
         "general.parameter_count": 8190735360,
         "general.quantization_version": 2,
         "general.size_label": "8B",
-        "general.type": "model",
+        "general.type": "modelname_placeholder",
         "model.attention.head_count": 32,
         "model.attention.head_count_kv": 8,
         "model.attention.key_length": 128,

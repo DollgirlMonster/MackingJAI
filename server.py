@@ -60,8 +60,7 @@ def prompt_model():
     message_ready.clear()
     
     if request.method == 'POST':
-        data = request.get_json()
-        
+        data = request.get_json()        
         # Extract the user's prompt from the OpenAI‑style messages list
         messages = data.get('messages', [])
         # Build conversation history as prompt for the model
@@ -91,34 +90,88 @@ def prompt_model():
         subprocess.Popen(["shortcuts", "run", "MackingJAI"])
         message_ready.wait()
         
-        response_payload = {
-            "id": "chatcmpl-local-001",
-            "object": "chat.completion",
-            "created": 0,
-            "model": stored_model,
-            "prompt": stored_prompt,
-            "choices": [
-                {
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": stored_message
-                    },
-                    "finish_reason": "stop"
+        stream = data.get('stream', False)
+        
+        if not stream:
+            response_payload = {
+                "id": "chatcmpl-local-001",
+                "object": "chat.completion",
+                "created": 0,
+                "model": stored_model,
+                "prompt": stored_prompt,
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": "assistant",
+                            "content": stored_message
+                        },
+                        "finish_reason": "stop"
+                    }
+                ],
+                "usage": {
+                    "prompt_tokens": 0,
+                    "completion_tokens": 0,
+                    "total_tokens": 0
+                },
+                # Generic signal that processing is done
+                "finish_signal": True
+            }
+            response = jsonify(response_payload)
+            # Add a generic header to signal completion
+            response.headers['X-Chat-Complete'] = 'true'
+            return response
+        else:
+            # Streaming: yield chunks of the message
+            def generate_stream():
+                import uuid
+                now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                chunk_size = 8  # characters per chunk
+                content = stored_message or ""
+                for i in range(0, len(content), chunk_size):
+                    chunk = content[i:i+chunk_size]
+                    obj = {
+                        "id": "chatcmpl-local-001",
+                        "object": "chat.completion.chunk",
+                        "created": 0,
+                        "model": stored_model,
+                        "choices": [
+                            {
+                                "index": 0,
+                                "delta": {
+                                    "role": "assistant",
+                                    "content": chunk
+                                },
+                                "finish_reason": None
+                            }
+                        ]
+                    }
+                    yield f"data: {json.dumps(obj)}\n\n"
+                    time.sleep(0.001)
+                # Final chunk with finish_reason and usage
+                obj = {
+                    "id": "chatcmpl-local-001",
+                    "object": "chat.completion.chunk",
+                    "created": 0,
+                    "model": stored_model,
+                    "choices": [
+                        {
+                            "index": 0,
+                            "delta": {
+                                "role": "assistant",
+                                "content": ""
+                            },
+                            "finish_reason": "stop"
+                        }
+                    ],
+                    "usage": {
+                        "prompt_tokens": 0,
+                        "completion_tokens": 0,
+                        "total_tokens": 0
+                    }
                 }
-            ],
-            "usage": {
-                "prompt_tokens": 0,
-                "completion_tokens": 0,
-                "total_tokens": 0
-            },
-            # Generic signal that processing is done
-            "finish_signal": True
-        }
-        response = jsonify(response_payload)
-        # Add a generic header to signal completion
-        response.headers['X-Chat-Complete'] = 'true'
-        return response
+                yield f"data: {json.dumps(obj)}\n\n"
+            return Response(generate_stream(), mimetype='application/x-ndjson')
 
 @app.route('/v1/models', methods=['GET'])
 def list_models():
@@ -256,7 +309,23 @@ def list_models_ollama():
 @app.route('/api/show', methods=['POST'])
 def show_model():
     data = request.get_json()
-    return json.load(open("api_show.json"))
+    model_name = data.get('model', default_model)
+    model_name = model_handler(model_name)
+    print(f"Data is {data}")
+    with open("api_show.json") as f:
+        json_format = json.load(f)
+    # Recursively replace all 'modelname_placeholder' with model_name
+    def replace_placeholders(obj):
+        if isinstance(obj, dict):
+            return {k: replace_placeholders(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [replace_placeholders(i) for i in obj]
+        elif obj == "modelname_placeholder":
+            return model_name
+        else:
+            return obj
+    json_format = replace_placeholders(json_format)
+    return jsonify(json_format)
 
 @app.route('/api/version', methods=['GET'])
 def version():
