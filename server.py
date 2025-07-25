@@ -27,6 +27,8 @@ models = [
     "GPT-4o",
     "GPT-4.1",
     "GPT-4.1-mini",
+    "apple_local",
+    "apple_cloud"
 ]
 
 # Flask app
