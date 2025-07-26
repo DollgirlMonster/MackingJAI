@@ -8,13 +8,33 @@
 </div>
 
 # Overview
-MackingJAI mocks the process of using OpenAI API or Ollama API for chat models by using ChatGPT Mac app and Apple Shortcuts. Users can simplify the interaction with ChatGPT without using an API key.
+MackingJAI mocks the process of using OpenAI API or Ollama API for chat models by using Apple Intelligence models or ChatGPT Mac app. Users can simplify the interaction with Apple Intelligence models or ChatGPT without using an API key.
 
 You can use it for any application that uses OpenAI API or Ollama API to run.
 
+> **🤖 Note:**  
+> To use Apple Intelligence models, you need to have MacOS Tahoe 26
+
+
+# Supported Models
+**Supported Models:**
+
+- **Apple Intelligence:**
+  - `apple_local` (On device apple intelligence model)
+  - `apple_cloud` (Private Cloud Compute apple intelligence model)
+
+- **ChatGPT:**
+  - `o4-mini-high`
+  - `o4-mini`
+  - `o3`
+  - `GPT-4.5`
+  - `GPT-4o`
+  - `GPT-4.1`
+  - `GPT-4.1-mini`
+
 # Installation
 - Download and install the DMG file from [releases](https://github.com/0ssamaak0/MackingJAI/releases)
-- Install the shortcut by clicking on `Install Shortcut` from the menu icon or from [here](https://www.icloud.com/shortcuts/508acd78c215490394c4a70c902dbb58)
+- Install the shortcut by clicking on `Install Shortcut` from the menu icon or from [here](https://www.icloud.com/shortcuts/852b948c53474658bda1ebcb6574541c)
 
 ![menu](assets/menu.png)
 
@@ -35,7 +55,7 @@ curl http://127.0.0.1:11435/v1/chat/completions \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer No need for API" \
     -d '{
-        "model": "o4-mini-high",
+        "model": "apple_cloud",
     "messages": [
         {
             "role": "system",
@@ -102,6 +122,13 @@ print(ai_msg)
 MackingJAI can be used for Raycast AI, just change Ollama Route from `11434` to `11435` in the Raycast AI settings. It will access all available models in your ChatGPT Desktop app.
 
 ![raycast](assets/raycast.png)
+
+## GitHub Copilot
+To use MackingJAI with GitHub Copilot, you need to set the Ollama endpoint to `http://localhost:11435` in the GitHub Copilot settings. Then select the models you want to use from the dropdown menu.
+
+![copilot](assets/copilot.png)
+
+
 
 # Limitations
 - Everything is limited by your chatgpt desktop application and your subscription including available models, rate limits and generation speed.
