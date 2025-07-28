@@ -107,11 +107,7 @@ print(ai_msg)
 
 ## Open-webui
 
-- **As a Local Ollama API**: Just add a new connection with the URL `http://host.docker.internal:11435`
-
-- As an **OpenAI API compatible**: add a new OpenAI API compatible connection with URL `http://host.docker.internal:11435/v1` (if you installed openwebui using docker) and set they key to anything
-
-![openwebui](assets/open-webui.png)
+Just add a new Ollama API connection with the URL `http://host.docker.internal:11435`
 
 - If you don't use docker, check the URL of Ollama in Ollama API and replace `11434` with `11435` in the URL
 

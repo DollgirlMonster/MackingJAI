@@ -41,6 +41,8 @@ def model_handler(model_name):
     # Check if the model name is in the list of supported models
     # If the model name contains a snapshot, remove it
     model_name = re.sub(r'-\d{4}-\d{2}-\d{2}$', '', model_name)
+    # strip :
+    model_name = model_name.split(":")[0]
     
     # Try to match with one of our standard model names
     model_name = next((m for m in models if model_name.lower() == m.lower()), model_name)
@@ -51,7 +53,6 @@ def model_handler(model_name):
     elif model_name == "gpt-4.1-nano":
         print("gpt-4.1-nano is not supported, using gpt-4o mini instead")
         model_name = "GPT-4o mini"
-    print(f"Model name: {model_name}")
     assert model_name in models, f"Model {model_name} is not supported.\n"
     return model_name
 
@@ -304,7 +305,7 @@ def list_models_ollama():
     """
     return jsonify({
         "models": [
-            {"name":m , "model": m, "size": 1, "digest": "", "modified_at": "2025-01-01T11:15:24.832444301+03:00"} for m in models
+            {"name":m, "model": m + ":latest" , "size": 1, "digest": "", "modified_at": "2025-01-01T11:15:24.832444301+03:00"} for m in models
         ]
     })
 
@@ -313,7 +314,6 @@ def show_model():
     data = request.get_json()
     model_name = data.get('model', default_model)
     model_name = model_handler(model_name)
-    print(f"Data is {data}")
     with open("api_show.json") as f:
         json_format = json.load(f)
     # Recursively replace all 'modelname_placeholder' with model_name
