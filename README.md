@@ -1,7 +1,7 @@
 <div align = "center">
     <h1> MackingJAI </h1>
     <img src = "assets/icon.png" width = 200 height = 200>
-    <h3>Mocking OpenAI API through ChatGPT Desktop app</h3>
+    <h3>Accessing Apple Intelligence and ChatGPT desktop through OpenAI / Ollama API</h3>
 <br>
 
 ![gif_main](assets/gif_main.gif)
