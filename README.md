@@ -38,12 +38,12 @@ You can use it for any application that uses OpenAI API or Ollama API to run.
 
 ![menu](assets/menu.png)
 
-- Make sure you have ChatGPT Desktop app installed and running on your Mac.
+- Ensure that:
+  - For Apple Intelligence models, Apple Intelligence is enabled on macOS Tahoe 26 or later.
+  - For ChatGPT models, the ChatGPT Desktop app is installed and running on your Mac.
 - In any OpenAI API compatible request, set the API base to `http://127.0.0.1:11435/v1/` instead of `https://api.openai.com/v1` and set any value for the API key. The API key is not used in this mock.
-- Or if using Ollama API, just change the API base from `http://127.0.0.1:11434` to `http://127.0.0.1:11435`. Nothing else is needed.
-- The shortcut will automatically detect the request and send it to the ChatGPT Desktop app
-
-Note: You may be asked to give some permissions to the shortcut to run. This is necessary for the shortcut to work properly.
+- If you use the Ollama API, change the base URL from `http://127.0.0.1:11434` to `http://127.0.0.1:11435`. No further changes are required.
+> **Note:** You may be asked to give permissions (e.g., in System Settings under Accessibility or Automation) to allow the shortcut to intercept API calls. This is required for it to work correctly.
 
 
 ## Usage
@@ -125,16 +125,14 @@ To use MackingJAI with GitHub Copilot, you need to set the Ollama endpoint to `h
 ![copilot](assets/copilot.png)
 
 
-
 # Limitations
-- Everything is limited by your chatgpt desktop application and your subscription including available models, rate limits and generation speed.
-- There's no way to set the system prompt or use any other parameters.
+- Everything is limited by your apple intelligence or chatgpt desktop application and your subscription including available models, rate limits and generation speed.
+- There's no way use any other parameters like temperature, top_p, etc.
 - You can't send images in this mock.
 
 # Models
 By default, all available models in your ChatGPT Desktop app are available in MackingJAI. 
 - If you are using a code that uses OpenAI API with acertain snapshot e.g., `gpt-4o-2024-05-13` you will be redirected to the same model.
-- `GPT4.1` models are not supported since they are API exclusive. So `gpt-4.1`, `gpt-4.1-mini`, and `gpt-4.1-nano` are redirected to `GPT-4`, `GPT-4o` and `GPT-4o-mini` respectively.
 
 # Todo
 - ~~Explore how to integrate conversation history~~ ✅
