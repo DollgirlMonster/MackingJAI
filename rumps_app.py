@@ -40,7 +40,7 @@ class FlaskServerApp(rumps.App):
     
     def install_shortcut(self, _):
         # Replace with your actual iCloud shortcut link
-        shortcut_url = "https://www.icloud.com/shortcuts/852b948c53474658bda1ebcb6574541c"
+        shortcut_url = "https://www.icloud.com/shortcuts/753cd6efc8fb49918817e107f12a0420"
         subprocess.run(['open', shortcut_url])
         
     def start_server(self):

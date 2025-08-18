@@ -12,7 +12,7 @@ message_ready = Event()
 
 # Default values
 default_prompt = "hi, what is 1 + 1"
-default_model = "GPT-4o"
+default_model = "GPT-5"
 
 # Store prompt and model values
 stored_prompt = default_prompt
@@ -20,13 +20,9 @@ stored_model = default_model
 stored_message = ""
 
 models = [
-    "o4-mini-high",
-    "o4-mini",
-    "o3",
-    "GPT-4.5",
-    "GPT-4o",
-    "GPT-4.1",
-    "GPT-4.1-mini",
+    "GPT-5",
+    "GPT-5 mini",
+    "GPT-5 nano",
     "apple_local",
     "apple_cloud"
 ]
@@ -47,12 +43,10 @@ def model_handler(model_name):
     # Try to match with one of our standard model names
     model_name = next((m for m in models if model_name.lower() == m.lower()), model_name)
     
-    if model_name == "o1-pro":
-        print("o1-pro is not supported, using o3 instead")
-        model_name = "o3"
-    elif model_name == "gpt-4.1-nano":
-        print("gpt-4.1-nano is not supported, using gpt-4o mini instead")
-        model_name = "GPT-4o mini"
+    # If the model name contains 'gpt' (case-insensitive), route it to 'GPT-5'
+    if "gpt" in model_name.lower():
+        print(f"{model_name} detected as GPT model, routing to GPT-5")
+        model_name = "GPT-5"
     assert model_name in models, f"Model {model_name} is not supported.\n"
     return model_name
 

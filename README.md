@@ -12,8 +12,9 @@ MackingJAI mocks the process of using OpenAI API or Ollama API for chat models b
 
 You can use it for any application that uses OpenAI API or Ollama API to run.
 
-> **🤖 Note:**  
+> **Notes:**  
 > To use Apple Intelligence models, you need to have MacOS Tahoe 26
+
 
 
 # Supported Models
@@ -24,17 +25,13 @@ You can use it for any application that uses OpenAI API or Ollama API to run.
   - `apple_cloud` (Private Cloud Compute apple intelligence model)
 
 - **ChatGPT:**
-  - `o4-mini-high`
-  - `o4-mini`
-  - `o3`
-  - `GPT-4.5`
-  - `GPT-4o`
-  - `GPT-4.1`
-  - `GPT-4.1-mini`
+> With the release of new GPT 5 models, ChatGPT shortcut doesn't have an option to set the model. It will route the request automatically. 
+Just set it to `GPT-5` and it will work!
+
 
 # Installation
 - Download and install the DMG file from [releases](https://github.com/0ssamaak0/MackingJAI/releases)
-- Install the shortcut by clicking on `Install Shortcut` from the menu icon or from [here](https://www.icloud.com/shortcuts/852b948c53474658bda1ebcb6574541c)
+- Install the shortcut by clicking on `Install Shortcut` from the menu icon or from [here](https://www.icloud.com/shortcuts/753cd6efc8fb49918817e107f12a0420)
 
 ![menu](assets/menu.png)
 
@@ -75,7 +72,7 @@ from openai import OpenAI
 client = OpenAI(api_key="No need for API", base_url="http://127.0.0.1:11435/v1/")
 
 completion = client.chat.completions.create(
-  model="gpt-4o",
+  model="GPT-5",
   messages=[
     {"role": "developer", "content": "You are a helpful assistant."},
     {"role": "user", "content": "Hello!"}
@@ -90,7 +87,7 @@ print(completion.choices[0].message)
 from langchain_openai import ChatOpenAI
 
 llm = ChatOpenAI(
-    model_name="gpt-4o",
+    model_name="GPT-5",
     openai_api_base="http://127.0.0.1:11435/v1",
     openai_api_key="No key",
 )
@@ -111,8 +108,8 @@ Just add a new Ollama API connection with the URL `http://host.docker.internal:1
 
 - If you don't use docker, check the URL of Ollama in Ollama API and replace `11434` with `11435` in the URL
 
-> **Tip:** If you are using reasoning models like `o3` or `o4-mini`, it's better to set a different model for Title and Tag Generation.  
-> Navigate to `Settings > Admin Settings > Interface > Set Task Model` and choose a non-reasoning model. This will save your quota and speed up the generation process.
+> ~~**Tip:** If you are using reasoning models like `o3` or `o4-mini`, it's better to set a different model for Title and Tag Generation.  
+> Navigate to `Settings > Admin Settings > Interface > Set Task Model` and choose a non-reasoning model. This will save your quota and speed up the generation process.~~
 
 ## Raycast AI
 MackingJAI can be used for Raycast AI, just change Ollama Route from `11434` to `11435` in the Raycast AI settings. It will access all available models in your ChatGPT Desktop app.
@@ -130,9 +127,6 @@ To use MackingJAI with GitHub Copilot, you need to set the Ollama endpoint to `h
 - There's no way use any other parameters like temperature, top_p, etc.
 - You can't send images in this mock.
 
-# Models
-By default, all available models in your ChatGPT Desktop app are available in MackingJAI. 
-- If you are using a code that uses OpenAI API with acertain snapshot e.g., `gpt-4o-2024-05-13` you will be redirected to the same model.
 
 # Todo
 - ~~Explore how to integrate conversation history~~ ✅
