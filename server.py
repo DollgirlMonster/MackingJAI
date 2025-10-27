@@ -168,7 +168,7 @@ def prompt_model():
                     }
                 }
                 yield f"data: {json.dumps(obj)}\n\n"
-            return Response(generate_stream(), mimetype='application/x-ndjson')
+            return Response(generate_stream(), mimetype='text/event-stream')
 
 @app.route('/v1/models', methods=['GET'])
 def list_models():
